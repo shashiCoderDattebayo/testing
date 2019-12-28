@@ -1,6 +1,7 @@
 package models;
 
 public class OrderPromise {
+
     private final int buyId;
     private final int sellId;
     private final int quantity;
