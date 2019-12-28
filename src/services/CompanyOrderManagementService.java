@@ -1,5 +1,6 @@
 package services;
 
+import models.OrderPromise;
 import models.StockOrder;
 
 import java.util.ArrayList;
@@ -16,12 +17,13 @@ public class CompanyOrderManagementService {
         this.sellOrders = new ArrayList<>();
     }
 
-    public void addBuyOrder(StockOrder stockOrder) {
-        return;
+    public List<OrderPromise> addBuyOrder(StockOrder stockOrder) {
+        // TODO: 28/12/19 add the order to specific company list and match it with sell
+        return null;
     }
 
-    public void addSellOrder(StockOrder stockOrder) {
-        return;
+    public List<OrderPromise> addSellOrder(StockOrder stockOrder) {
+        return null;
     }
 
     private boolean validateOrder(StockOrder stockOrder) {

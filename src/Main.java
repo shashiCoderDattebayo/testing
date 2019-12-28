@@ -1,7 +1,9 @@
+import models.OrderPromise;
 import models.StockOrder;
 import services.StockExchangeService;
 
 import java.text.ParseException;
+import java.util.List;
 
 import static data.StockExchangeDummyData.getDummyData;
 
@@ -11,10 +13,15 @@ public class Main {
         StockExchangeService stockExchangeService = new StockExchangeService();
         try {
             for (StockOrder stockOrder : getDummyData()) {
-                stockExchangeService.addOrder(stockOrder);
+                List<OrderPromise> orderPromises = stockExchangeService.addOrder(stockOrder);
+                message(orderPromises);
             }
         } catch (ParseException e) {
             System.out.println("Unable to parse input");
         }
+    }
+
+    private static void message(List<OrderPromise> orderPromises) {
+        // TODO: 28/12/19 print the order details
     }
 }
