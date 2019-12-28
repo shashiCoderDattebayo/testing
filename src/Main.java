@@ -22,6 +22,8 @@ public class Main {
     }
 
     private static void message(List<OrderPromise> orderPromises) {
-        // TODO: 28/12/19 print the order details
+        for (OrderPromise orderPromise : orderPromises) {
+            System.out.println(orderPromise.toString());
+        }
     }
 }

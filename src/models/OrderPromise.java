@@ -28,4 +28,14 @@ public class OrderPromise {
     public double getPrice() {
         return price;
     }
+
+    @Override
+    public String toString() {
+        return "OrderPromise{" +
+                "buyId=" + buyId +
+                ", sellId=" + sellId +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                '}';
+    }
 }
