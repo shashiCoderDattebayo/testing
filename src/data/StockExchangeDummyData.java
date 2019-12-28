@@ -14,6 +14,9 @@ import java.util.List;
 
 import static models.StockOrder.Type.BUY;
 import static models.StockOrder.Type.SELL;
+import static utils.StringParseUtil.parseToDate;
+import static utils.StringParseUtil.parseToDouble;
+import static utils.StringParseUtil.parseToInt;
 
 public class StockExchangeDummyData {
 
@@ -51,21 +54,20 @@ public class StockExchangeDummyData {
 
     private static StockOrder getStockOrder(String data) throws InputException {
         String[] fields = data.split(" ");
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         if(fields.length != NUMBER_OF_FIELDS) {
             throw new InputException("Wrong number of fields");
         } else {
-            int id = Integer.parseInt(fields[0]);
+            int id = parseToInt(fields[0]);
             Date date;
             try {
-                date = simpleDateFormat.parse(fields[1]);
+                date = parseToDate(fields[1], "HH:mm");
             } catch (ParseException e) {
                 throw new InputException("Failed to parse date.");
             }
             String name = fields[2];
             StockOrder.Type type = StockOrder.Type.valueOf(fields[3].toUpperCase());
-            int quantity = Integer.parseInt(fields[4]);
-            double price = Double.parseDouble(fields[5]);
+            int quantity = parseToInt(fields[4]);
+            double price = parseToDouble(fields[5]);
             return new StockOrder(id, date, name, type, quantity, price);
         }
     }
