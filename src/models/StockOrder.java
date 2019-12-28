@@ -15,11 +15,10 @@ public class StockOrder {
     }
 
     public enum Type {
-        BUY, SELL;
+        BUY, SELL
 
     }
     private final int id;
-
     private final Date date;
     private final String name;
     private final Type type;

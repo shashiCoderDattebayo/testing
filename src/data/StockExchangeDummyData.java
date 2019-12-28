@@ -1,16 +1,23 @@
 package data;
 
+import exceptions.InputException;
 import models.StockOrder;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static models.StockOrder.Type.BUY;
 import static models.StockOrder.Type.SELL;
 
 public class StockExchangeDummyData {
+
+    private static int NUMBER_OF_FIELDS = 6;
 
     public static List<StockOrder> getDummyData() throws ParseException {
         List<StockOrder> stockOrders = new ArrayList<>();
@@ -25,5 +32,41 @@ public class StockExchangeDummyData {
         stockOrders.add(new StockOrder(8, simpleDateFormat.parse("10:01"), "FK", SELL, 20, 240.10));
         stockOrders.add(new StockOrder(9, simpleDateFormat.parse("10:02"), "FK", BUY, 150, 242.70));
         return stockOrders;
+    }
+
+    public static List<StockOrder> getDummyDataFromFile() throws InputException {
+        List<StockOrder> stockOrders = new ArrayList<>();
+        try {
+            BufferedReader in = new BufferedReader(new FileReader("data.txt"));
+            String str;
+            while ((str = in.readLine()) != null) {
+                stockOrders.add(getStockOrder(str));
+            }
+            in.close();
+        } catch (IOException e) {
+            throw new InputException("Unable to deparse file.");
+        }
+        return stockOrders;
+    }
+
+    private static StockOrder getStockOrder(String data) throws InputException {
+        String[] fields = data.split(" ");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        if(fields.length != NUMBER_OF_FIELDS) {
+            throw new InputException("Wrong number of fields");
+        } else {
+            int id = Integer.parseInt(fields[0]);
+            Date date;
+            try {
+                date = simpleDateFormat.parse(fields[1]);
+            } catch (ParseException e) {
+                throw new InputException("Failed to parse date.");
+            }
+            String name = fields[2];
+            StockOrder.Type type = StockOrder.Type.valueOf(fields[3].toUpperCase());
+            int quantity = Integer.parseInt(fields[4]);
+            double price = Double.parseDouble(fields[5]);
+            return new StockOrder(id, date, name, type, quantity, price);
+        }
     }
 }
